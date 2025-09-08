@@ -1,0 +1,7 @@
+torch
+torchvision
+huggingface_hub
+transformers
+accelerate
+einops
+peft
