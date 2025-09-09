@@ -29,7 +29,7 @@ pip install -r requirements.txt
 ## Training
 Training can be run with the following command with the provided token...
 ```
-python run_training.py
+python run_training.py --data-directory <default is sarrarp> --output-directory <default is trained-models>
 ``` 
 At this resolution, and with DinoV3 patch size (16x16) there are a large number of tokens. Training with the default config that requires ~30Gb of VRAM. To run on a smaller GPU use the `--low-res` flag to run at quater resolution.
 
@@ -37,7 +37,7 @@ At this resolution, and with DinoV3 patch size (16x16) there are a large number 
 ## Inference
 Inference on the test data split can be run with...
 ```
-python run_inference.py
+python run_inference.py --data-directory <default is sarrarp> --model-directory <default is trained-models>
 ```
 This will produce visualisations images (rgb, prediction, groundtruth) and prediction masks saved into the model directory e.g. `trained-model/inference/video_41/frames/000000000_pred.png`. Evaluation is also performed during this by calculating mIoU over all samples and averaging. To run only the evaluation use the `--eval-only` flag.
 
