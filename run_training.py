@@ -1,6 +1,7 @@
 import os
 import json
 import torch
+import huggingface_hub
 from glob import glob
 from tqdm import tqdm
 from itertools import islice
@@ -11,7 +12,6 @@ from torchvision.transforms import ColorJitter, Normalize, InterpolationMode
 
 from src.sarrarp import SarrarpDataset, CLASSES
 from src.models import DinoV3ViT
-# from src.new import DinoV3ViT
 from src.utils import set_seed, miou
 
 
@@ -24,8 +24,8 @@ def main(args):
     os.makedirs(args.output_directory, exist_ok=True)
 
     # Backbone:
-    # I'm using a dinov3 backbone mainly because I havent had a chance to try
-    # them yet and wanted to play with it. I've sElected a small variant (86M params)
+    # I'm using a dinov3 backbone mainly because I havent had a chance to try them
+    # yet and wanted to play with it. See class definition for adapter implementaion.
     print(f"Loading backbone...")
     model = DinoV3ViT(
         num_classes=len(CLASSES),
@@ -182,13 +182,19 @@ if __name__ == "__main__":
     parser.add_argument("--backbone-size", type=str, choices=["vits", "vitb", "vitl"], default="vitl")
     parser.add_argument("--backbone-training", type=str, choices=["frozen", "lora", "full"], default="lora")
     parser.add_argument("--lora-rank", type=int, default=8)
-    parser.add_argument("--batch-size", type=int, default=8)
+    parser.add_argument("--batch-size", type=int, default=6)
     parser.add_argument("--low-res", action="store_true")
     parser.add_argument("--learning-rate", type=float, default=1e-4)
     parser.add_argument("--max-epochs", type=int, default=20)
     parser.add_argument("--validation-split-size", type=float, default=0.2)
-    parser.add_argument("--validation-steps", type=int, default=200)
-    parser.add_argument("--early-stop-patience", type=int, default=10)
+    parser.add_argument("--validation-steps", type=int, default=500)
+    parser.add_argument("--early-stop-patience", type=int, default=5)
     parser.add_argument("--seed", type=int, default=645486)
     args = parser.parse_args()
+    
+    # I've provided an access token with sufficient permisions.
+    with open("hf_token.txt") as file:
+        token = file.read()
+    huggingface_hub.login(token)
+
     main(args)

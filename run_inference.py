@@ -1,7 +1,7 @@
 import os
 import torch
+import huggingface_hub
 from glob import glob
-from tqdm import tqdm
 from argparse import ArgumentParser
 from torch.utils.data import DataLoader
 from torchvision.transforms import Normalize
@@ -49,7 +49,7 @@ def main(args):
 
                     visualisation = torch.cat([
                         frame, prediction_vis, target_vis
-                    ], dim=1)
+                    ], dim=2)
                     visualisation = resize(visualisation, [visualisation.size(1) // 4, visualisation.size(2) // 4])
                     os.makedirs(os.path.dirname(f"{args.model_directory}/inference/{path}"), exist_ok=True)
                     write_png(visualisation.cpu(), f"{args.model_directory}/inference/{path.replace(".png", "_vis.png")}")
@@ -66,4 +66,10 @@ if __name__ == "__main__":
     parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--eval-only", action="store_true")
     args = parser.parse_args()
+
+    # I've provided an access token with sufficient permisions.
+    with open("hf_token.txt") as file:
+        token = file.read()
+    huggingface_hub.login(token)
+
     main(args)

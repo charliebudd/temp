@@ -1,7 +1,6 @@
 import torch
 from einops import rearrange
 from einops.layers.torch import Rearrange
-from huggingface_hub import login
 from transformers import AutoModel, AutoImageProcessor
 from peft import LoraConfig, get_peft_model
 
@@ -9,10 +8,6 @@ from peft import LoraConfig, get_peft_model
 # https://huggingface.co/facebook/dinov3-vits16-pretrain-lvd1689m
 # https://huggingface.co/facebook/dinov3-vitb16-pretrain-lvd1689m
 # https://huggingface.co/facebook/dinov3-vitl16-pretrain-lvd1689m
-
-# I've provided an access token with sufficient permisions.
-# It will be revoked in a few weeks.
-login("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")
 
 # The model applies a simple MLP to the token embeddings to derive dense logit maps.
 # PEFT is optionally used to provide LoRA fine tuning (allthough this provides the best performance).
