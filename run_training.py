@@ -181,7 +181,7 @@ if __name__ == "__main__":
     parser.add_argument("--output-directory", type=str, default="trained-model")
     parser.add_argument("--backbone-size", type=str, choices=["vits", "vitb", "vitl"], default="vitl")
     parser.add_argument("--backbone-training", type=str, choices=["frozen", "lora", "full"], default="lora")
-    parser.add_argument("--lora-rank", type=int, default=8)
+    parser.add_argument("--lora-rank", type=int, default=16)
     parser.add_argument("--batch-size", type=int, default=6)
     parser.add_argument("--low-res", action="store_true")
     parser.add_argument("--learning-rate", type=float, default=1e-4)
