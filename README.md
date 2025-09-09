@@ -41,5 +41,5 @@ python run_inference.py --data-directory <default is sarrarp> --model-directory 
 ```
 This will produce visualisations images (rgb, prediction, groundtruth) and prediction masks saved into the model directory e.g. `trained-model/inference/video_41/frames/000000000_pred.png`. Evaluation is also performed during this by calculating mIoU over all samples and averaging. To run only the evaluation use the `--eval-only` flag.
 
-## Improvemnts
+## Improvements
 Improvements would likely come from better adapter architecture, possibly incorporating skip connection from earlier in the ViT to help guide final segmentation output. Naturally running at full resolution would help however this would require splitting across multiple GPUs and I feel I already have an advantage having a 40GB GPU to hand. I have not explored class-wise scores which would be important for assessing how to improve the model, however it is clear that the smaller objects have the most errors. Again, running at higher resolution would help.
