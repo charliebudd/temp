@@ -2,7 +2,7 @@
 
 ![Example segmentation](./example.png)
 
-I've chosen to train a simple adapter to evaluate DinoV3 in surgery. Despite the simple adpater the model performs commendably acheiving mIoU's of around 0.68 after training for just a single epoch.
+I've chosen to train a simple adapter to evaluate DinoV3 in surgery. Despite the simple adpatation the model performs reasonably well acheiving mIoU of 0.687 on the test split after training for just a single epoch.
 Here's a break down of the approach...
 - Data is split 80/20 into training and validation splits.
 - ViT attention blocks are trained with LoRA to prevent overfitting.
@@ -33,7 +33,6 @@ python run_training.py --data-directory <default is sarrarp> --output-directory 
 ``` 
 At this resolution, and with DinoV3 patch size (16x16) there are a large number of tokens. Training with the default config that requires ~30Gb of VRAM. To run on a smaller GPU use the `--low-res` flag to run at quater resolution.
 
-
 ## Inference
 Inference on the test data split can be run with...
 ```
@@ -42,4 +41,4 @@ python run_inference.py --data-directory <default is sarrarp> --model-directory 
 This will produce visualisations images (rgb, prediction, groundtruth) and prediction masks saved into the model directory e.g. `trained-model/inference/video_41/frames/000000000_pred.png`. Evaluation is also performed during this by calculating mIoU over all samples and averaging. To run only the evaluation use the `--eval-only` flag.
 
 ## Improvements
-Improvements would likely come from better adapter architecture, possibly incorporating skip connection from earlier in the ViT to help guide final segmentation output. Naturally running at full resolution would help however this would require splitting across multiple GPUs and I feel I already have an advantage having a 40GB GPU to hand. I have not explored class-wise scores which would be important for assessing how to improve the model, however it is clear that the smaller objects have the most errors. Again, running at higher resolution would help.
+Improvements would likely come from better adapter architecture, possibly incorporating skip connection from earlier in the ViT to help guide final segmentation output. This would also help adress the blocky nature of outputs. Naturally running at full resolution would help however this would require splitting across multiple GPUs and I feel I already have an advantage having a 40GB GPU to hand. I have not explicitly explored class-wise scores which would be important for assessing how to improve the model, however it is clear that the smaller objects have the most errors. Again, running at higher resolution would help.
