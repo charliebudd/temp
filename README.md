@@ -2,7 +2,7 @@
 
 ![Example segmentation](./example.png)
 
-I've chosen to train a simple adapter to evaluate DinoV3 in surgery. Despite the simple adpatation the model performs reasonably well acheiving mIoU of 0.687 on the test split after training for just a single epoch.
+I've chosen to train a simple adapter to evaluate DinoV3 in surgery. Despite the simple adpatation the model performs reasonably well acheiving mIoU of 0.687 on the test split after training for around eight epochs.
 Here's a break down of the approach...
 - Data is split 80/20 into training and validation splits.
 - ViT attention blocks are trained with LoRA to prevent overfitting.
