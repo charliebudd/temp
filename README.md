@@ -8,12 +8,12 @@ Here's a break down of the approach...
 - ViT attention blocks are trained with LoRA to prevent overfitting.
 - Dense pixel-wise logits are derived from token embeddings via a simple 3 layer MLP. 
 - CrossEntropy loss is weighted per class based on pixel-wise frequencies.
-- Various spatial and color augmentations applied during trianing.
+- Various spatial and color augmentations applied during training.
 - Images downsampled to half resolution to reduce memory footprint.  
 - Resolution (960×520) is still high enough to preserve fine objects like thread.  
 - Output logits are interpolated to full-resolution before loss and score calculations.  
 
-NOTE: DinoV3 is a gated huggingface repo, I've provided a `hf_token.txt` file in my email which needs to be place in the root of this project to run the code.
+> NOTE: DinoV3 is a gated huggingface repo, I've provided a `hf_token.txt` file in my email which needs to be place in the root of this project to run the code.
 
 ## Data Prep
 Zip archives extracted in to `sarrarp/train` and `sarrarp/test`.
